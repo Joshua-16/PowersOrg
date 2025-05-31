@@ -1,14 +1,14 @@
 const mongoose = require ('mongoose')
 
 // connecting to database
-const connect = mongoose.connect("mongodb://localhost:27017/myGoals")
+// const connect = mongoose.connect("mongodb://localhost:27017/myGoals")
 
-connect.then(() => {
-    console.log('database sucessfully connected');
-})
-.catch((err) => {
-    console.log("database not connected", err);
-})
+// connect.then(() => {
+//     console.log('database sucessfully connected');
+// })
+// .catch((err) => {
+//     console.log("database not connected", err);
+// })
 
 // creating a schema 
 

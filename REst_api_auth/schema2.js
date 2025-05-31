@@ -1,39 +1,51 @@
-const mongoose = require ('mongoose')
+const mongoose = require("mongoose");
 
-// connecting to database
-const connect = mongoose.connect("mongodb://localhost:27017/myGoals")
+const userSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: [true, "Name is required!"],
+    },
 
-connect.then(() => {
-    console.log('database sucessfully connected');
-})
-.catch((err) => {
-    console.log("database not connected", err);
-})
-
-// creating a schema 
-
-const RegSchema = new mongoose.Schema({
-    name:{
-        type: String,
-        required:[true, "input your name!"]
+    email: {
+      type: String,
+      required: [true, "Email is required!"],
+      unique: [true, "Email must be unique!"],
+      lowercase: true,
+      minLength: [5, "Minimum of 5 characters"],
     },
 
     password: {
-        type:String,
-        required: [true, "Password is required!"],
-        trim: true,
-        select: false
+      type: String,
+      required: [true, "Password is required!"],
+      trim: true,
+      select: false, 
     },
-    
-     email: {
-        type: String,
-        required: [true, "Email is required!"],
-        unique: [true, "Email must be unique!"],
-        lowercase: true,
-        minLength: [5, " minimum of 5 characters"]
-    }
-})
 
-const register = new mongoose.model("User", RegSchema)
+    isVerified: {
+      type: Boolean,
+      default: false,
+    },
 
-module.exports = register
+    emailVerifiedAt: {
+      type: Date,
+    },
+
+    resetToken: {
+      type: String,
+      default: null,
+    },
+
+    resetTokenExpiry: {
+      type: Date,
+      default: null,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
+
+const register = mongoose.model("User", userSchema);
+
+module.exports = register;
